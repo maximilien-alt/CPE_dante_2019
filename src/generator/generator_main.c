@@ -35,7 +35,7 @@ int main(int ac, char *av[])
         map = perfect_map(x, y);
     else
         map = imperfect_map(x, y);
-    for (int index = 0; map[index]; index += 1)
+    for (int index = 0; map && map[index]; index += 1)
         printf("%s\n", map[index]);
     return (0);
 }

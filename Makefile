@@ -73,9 +73,10 @@ COMP_2	=	src/generator/generator_main.c	\
 			src/generator/dante_generator.c	\
 			src/generator/perfect_map.c	\
 			src/generator/imperfect_map.c	\
+			src/generator/cells.c	\
 			src/garbage/garbage_collector.c	\
 
-CFLAGS  =	-W -Wall -Wextra -Iinclude
+CFLAGS  =	-W -Wall -Wextra -Iinclude -g3
 
 OBJ	=	$(SRC:.c=.o)
 

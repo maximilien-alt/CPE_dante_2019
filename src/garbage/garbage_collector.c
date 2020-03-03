@@ -28,9 +28,7 @@ void add_ptr_to_garbage_collector_t \
     garbage_collector_t *copy = malloc(sizeof(garbage_collector_t));
 
     copy->ptr = ptr;
-    copy->next = NULL;
-    while (*garbage_collector)
-        *garbage_collector = (*garbage_collector)->next;
+    copy->next = *garbage_collector;
     *garbage_collector = copy;
 }
 

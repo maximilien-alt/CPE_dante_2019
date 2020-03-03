@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "garbage_collector.h": "c",
+        "*.tcc": "c",
+        "string": "c",
+        "string_view": "c"
+    }
+}
