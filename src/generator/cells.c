@@ -9,6 +9,18 @@
 #include "../../include/my.h"
 #include "../../include/generator.h"
 
+void delete_cell(cells_t *cellules, cells_t *ptr)
+{
+    if (!cellules || !ptr)
+        return;
+    if (cellules == ptr)
+        cellules = ptr->next;
+    if (ptr->next)
+        ptr->next->previous = ptr->previous;
+    if (ptr->previous)
+        ptr->previous->next = ptr->next;
+}
+
 void add_cell(int x, int y, cells_t *cells)
 {
     cells_t *copy = my_malloc(sizeof(cells_t));

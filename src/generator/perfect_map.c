@@ -9,27 +9,69 @@
 #include "../../include/generator.h"
 #include "../../include/garbage_collector.h"
 
-void print_list(cells_t *cellules)
+void complete_cell(char **map, int x, int y, cells_t *cells)
 {
-    cells_t *copy = NULL;
+    int prev[2];
 
-    while (cellules) {
-        printf("%d %d\n", cellules->x, cellules->y);
-        copy = cellules;
-        cellules = cellules->next;
+    prev[0] = x;
+    prev[1] = y;
+    if (check_neighbour(x + 1, y, map, prev)) {
+        add_cell(x + 1, y, cells);
+        return;
     }
-    while (copy->previous) {
-        printf("%d %d\n", copy->x, copy->y);
-        copy = copy->previous;
+    if (check_neighbour(x - 1, y, map, prev)) {
+        add_cell(x - 1, y, cells);
+        return;
+    }
+    if (check_neighbour(x, y + 1, map, prev)) {
+        add_cell(x, y + 1, cells);
+        return;
+    }
+    if (check_neighbour(x, y - 1, map, prev)) {
+        add_cell(x, y - 1, cells);
+        return;
     }
 }
 
-void create_random_map(char **map, cells_t *cellules)
+int none_neighbour(int x, int y, char **map)
 {
-    (void)map;
-    for (int i = 1; i < 5; i += 1)
-        add_cell(i, i, cellules);
-    print_list(cellules);
+    int prev[2];
+
+    prev[0] = x;
+    prev[1] = y;
+    if (check_neighbour(x + 1, y, map, prev)) {
+        return (0);
+    }
+    if (check_neighbour(x - 1, y, map, prev)) {
+        return (0);
+    }
+    if (check_neighbour(x, y + 1, map, prev)) {
+        return (0);
+    }
+    if (check_neighbour(x, y - 1, map, prev)) {
+        return (0);
+    }
+    return (1);
+}
+
+char **create_random_map(char **map, cells_t *cellules)
+{
+    cells_t *copy = NULL;
+
+    if (!cellules)
+        return (map);
+    map[cellules->y][cellules->x] = '*';
+    for (int index = 0; map[index]; index += 1)
+        printf("%s\n", map[index]);
+    printf("\n");
+    if (none_neighbour(cellules->x, cellules->y, map)) {
+        copy = cellules;
+        for (; cellules; cellules = cellules->next)
+            delete_cell(cellules, cellules);
+        return (create_random_map(map, copy->previous));
+    }
+    complete_cell(map, cellules->x, cellules->y, cellules);
+    return (create_random_map(map, cellules->next));
 }
 
 char **perfect_map(int x, int y)
@@ -49,7 +91,6 @@ char **perfect_map(int x, int y)
             map[index][temp] = 'X';
     }
     map[index] = NULL;
-    create_random_map(map, &cellules);
-    printf("%d", cellules.x);
+    map = create_random_map(map, &cellules);
     return (map);
 }
