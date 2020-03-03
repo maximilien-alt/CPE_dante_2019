@@ -6,6 +6,7 @@
 */
 
 #include "../../include/my.h"
+#include "../../include/generator.h"
 #include "../../include/garbage_collector.h"
 
 int check_input_error(int ac, char *av[])
@@ -26,6 +27,7 @@ int main(int ac, char *av[])
     int y = 0;
     char **map = NULL;
 
+    srand(time(NULL));
     check_input_error(ac, av);
     x = my_getnbr(av[1]);
     y = my_getnbr(av[2]);
@@ -33,6 +35,7 @@ int main(int ac, char *av[])
         map = perfect_map(x, y);
     else
         map = imperfect_map(x, y);
-    (void)map;
+    for (int index = 0; map[index]; index += 1)
+        printf("%s\n", map[index]);
     return (0);
 }

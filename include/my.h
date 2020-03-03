@@ -31,10 +31,6 @@ typedef struct format_t
     void (*ptr)(va_list);
 } format_t;
 
-char **perfect_map(int x, int y);
-char **imperfect_map(int x, int y);
-int dante_generator(void);
-int dante_solver(void);
 void my_memset(char *buffer, char c, int number);
 int    my_putnbr_base(int nbr, char const *base);
 int    my_compute_power_rec(int nb, int p);

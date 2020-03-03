@@ -6,6 +6,7 @@
 */
 
 #include "../../include/my.h"
+#include "../../include/generator.h"
 
 char **perfect_map(int x, int y)
 {

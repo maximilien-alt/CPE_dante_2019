@@ -6,6 +6,7 @@
 */
 
 #include "../../include/my.h"
+#include "../../include/generator.h"
 
 char **imperfect_map(int x, int y)
 {
