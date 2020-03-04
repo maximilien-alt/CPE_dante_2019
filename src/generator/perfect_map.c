@@ -12,25 +12,18 @@
 void complete_cell(char **map, int x, int y, cells_t *cells)
 {
     int prev[2];
+    int check = rand() % 4;
 
     prev[0] = x;
     prev[1] = y;
-    if (check_neighbour(x + 1, y, map, prev)) {
-        add_cell(x + 1, y, cells);
-        return;
-    }
-    if (check_neighbour(x - 1, y, map, prev)) {
-        add_cell(x - 1, y, cells);
-        return;
-    }
-    if (check_neighbour(x, y + 1, map, prev)) {
-        add_cell(x, y + 1, cells);
-        return;
-    }
-    if (check_neighbour(x, y - 1, map, prev)) {
-        add_cell(x, y - 1, cells);
-        return;
-    }
+    if (check == 0)
+        first_order(map, prev, cells);
+    if (check == 1)
+        second_order(map, prev, cells);
+    if (check == 2)
+        third_order(map, prev, cells);
+    if (check == 3)
+        fourth_order(map, prev, cells);
 }
 
 int none_neighbour(int x, int y, char **map)
@@ -39,39 +32,31 @@ int none_neighbour(int x, int y, char **map)
 
     prev[0] = x;
     prev[1] = y;
-    if (check_neighbour(x + 1, y, map, prev)) {
+    if (check_neighbour(x + 1, y, map, prev))
         return (0);
-    }
-    if (check_neighbour(x - 1, y, map, prev)) {
+    if (check_neighbour(x - 1, y, map, prev))
         return (0);
-    }
-    if (check_neighbour(x, y + 1, map, prev)) {
+    if (check_neighbour(x, y + 1, map, prev))
         return (0);
-    }
-    if (check_neighbour(x, y - 1, map, prev)) {
+    if (check_neighbour(x, y - 1, map, prev))
         return (0);
-    }
     return (1);
 }
 
 char **create_random_map(char **map, cells_t *cellules)
 {
-    cells_t *copy = NULL;
-
-    if (!cellules)
-        return (map);
-    map[cellules->y][cellules->x] = '*';
-    for (int index = 0; map[index]; index += 1)
-        printf("%s\n", map[index]);
-    printf("\n");
-    if (none_neighbour(cellules->x, cellules->y, map)) {
-        copy = cellules;
-        for (; cellules; cellules = cellules->next)
-            delete_cell(cellules, cellules);
-        return (create_random_map(map, copy->previous));
+    while (cellules) {
+        map[cellules->y][cellules->x] = '*';
+        if (none_neighbour(cellules->x, cellules->y, map)) {
+            cellules = cellules->previous;
+            if (cellules)
+                cellules->next = NULL;
+        } else {
+            complete_cell(map, cellules->x, cellules->y, cellules);
+            cellules = cellules->next;
+        }
     }
-    complete_cell(map, cellules->x, cellules->y, cellules);
-    return (create_random_map(map, cellules->next));
+    return (map);
 }
 
 char **perfect_map(int x, int y)
@@ -86,9 +71,8 @@ char **perfect_map(int x, int y)
     cellules.previous = NULL;
     for (index = 0; index < y; index += 1) {
         map[index] = my_malloc(sizeof(char) * x + 1);
-        my_memset(map[index], 0, x + 1);
-        for (int temp = 0; temp < x; temp += 1)
-            map[index][temp] = 'X';
+        memset(map[index], 'X', x);
+        map[index][x] = 0;
     }
     map[index] = NULL;
     map = create_random_map(map, &cellules);

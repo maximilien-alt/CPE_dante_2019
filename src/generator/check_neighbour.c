@@ -79,10 +79,7 @@ int check_last_char(char **map, int x, int y, int prev[2])
 
 int check_neighbour(int x, int y, char **map, int prev[2])
 {
-    int tab_len = 0;
-
-    for (; map[tab_len]; tab_len += 1);
-    if (x < 0 || x >= my_strlen(map[0]) || y < 0 || y >= tab_len)
+    if (x < 0 || !map[0][x] || y < 0 || !map[y])
         return (0);
     if (map[y][x] == '*')
         return (0);

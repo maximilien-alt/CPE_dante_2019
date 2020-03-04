@@ -10,8 +10,13 @@
 
 char **imperfect_map(int x, int y)
 {
-    (void)x;
-    (void)y;
-    printf("imperfect\n");
-    return (NULL);
+    char **map = perfect_map(x, y);
+    int check = 0;
+    int tab_len = 0;
+
+    for (; map[tab_len]; tab_len += 1);
+    check = rand() % tab_len;
+    for (int index = 0; map[check][index]; index += 1)
+        map[check][index] = '*';
+    return (map);
 }
