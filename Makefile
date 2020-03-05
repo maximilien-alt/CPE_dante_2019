@@ -80,7 +80,7 @@ COMP_2	=	src/generator/generator_main.c	\
 			src/generator/random.c	\
 			src/garbage/garbage_collector.c	\
 
-CFLAGS  =	-W -Wall -Wextra -Iinclude -g3
+CFLAGS  =	-W -Wall -Wextra -Iinclude -O3
 
 OBJ	=	$(SRC:.c=.o)
 
