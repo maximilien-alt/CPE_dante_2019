@@ -72,7 +72,7 @@ int loop(store_t *store, cellule_t **array)
     push(&open, store->start);
     while (open) {
         current = lowest_fcost(open);
-        print_map(store, array, open, close);
+        //print_map(store, array, open, close);
         if (current->cellule.x == store->end.x && \
         current->cellule.y == store->end.y)
             return (final_push(current, store, array));
