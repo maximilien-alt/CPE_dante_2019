@@ -69,6 +69,7 @@ COMP_1	=	src/solver/solver_main.c	\
 			src/solver/dante_solver.c	\
 			src/solver/create_nodes.c	\
 			src/solver/dante_include.c	\
+			src/solver/dante_check.c	\
 			src/garbage/garbage_collector.c
 
 COMP_2	=	src/generator/generator_main.c	\
@@ -80,7 +81,7 @@ COMP_2	=	src/generator/generator_main.c	\
 			src/generator/random.c	\
 			src/garbage/garbage_collector.c	\
 
-CFLAGS  =	-W -Wall -Wextra -Iinclude -O3
+CFLAGS  =	-W -Wall -Wextra -Iinclude -O3 -g3
 
 OBJ	=	$(SRC:.c=.o)
 

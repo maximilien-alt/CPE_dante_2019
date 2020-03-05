@@ -38,13 +38,13 @@ int index, int temp)
     int x = temp;
     int y = index;
 
-    if (y < store->cols - 1)
+    if (y < store->cols - 1 && store->map[y + 1][x] != 'X')
         spe_push(cellule, y + 1, x);
-    if (y > 0)
+    if (y > 0 && store->map[y - 1][x] != 'X')
         spe_push(cellule, y - 1, x);
-    if (x < store->rows - 1)
+    if (x < store->rows - 1 && store->map[y][x + 1] != 'X')
         spe_push(cellule, y, x + 1);
-    if (x > 0)
+    if (x > 0 && store->map[y][x - 1] != 'X')
         spe_push(cellule, y, x - 1);
 }
 
@@ -62,15 +62,24 @@ void delete_node(nodes_t **nodes, nodes_t *ptr)
 
 nodes_t *lowest_fcost(nodes_t *open)
 {
-    int winner = 1000000;
+    int save_f = 1000000000;
+    int check = 0;
+    int winner = 0;
 
     for (nodes_t *copy = open; copy; copy = copy->next) {
-        if (copy->cellule.f_cost <= winner)
-            winner = copy->cellule.f_cost;
+        printf("potential [%d] [%d] f :%d\n", copy->cellule.y, copy->cellule.x, copy->cellule.f_cost);
+        if (copy->cellule.f_cost <= save_f) {
+            save_f = copy->cellule.f_cost;
+            winner = check;
+        }
+        check += 1;
     }
     for (nodes_t *copy = open; copy; copy = copy->next) {
-        if (copy->cellule.f_cost == winner)
+        if (winner == 0) {
+            printf("find [%d] [%d] f : %d\n", copy->cellule.y, copy->cellule.x, copy->cellule.f_cost);
             return (copy);
+        }
+        winner -= 1;
     }
     return (NULL);
 }

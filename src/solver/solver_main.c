@@ -32,7 +32,7 @@ int final_push(nodes_t *current, store_t *store, cellule_t **array)
     return (0);
 }
 
-void set_neighbors(nodes_t **current, cellule_t **array, store_t *store)
+void set_neighbors(nodes_t **current, store_t *store)
 {
     addNeighbors(&(*current)->cellule.neighbors, store, \
     (*current)->cellule.y, (*current)->cellule.x);
@@ -65,6 +65,7 @@ int main(int ac, char *av[])
 
     check_good_input(ac, av);
     map = dante_solver(av[1]);
+    (void)map;
     //for (int index = 0; map[index]; index += 1)
     //    printf("%s\n", map[index]);
     return (0);

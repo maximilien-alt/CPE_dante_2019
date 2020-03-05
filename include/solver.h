@@ -36,10 +36,12 @@ typedef struct nodes_s
     struct nodes_s *previous;
 }nodes_t;
 
+void delete_neighbor(cellule_t **neighbor, cellule_t *ptr);
+int check_better(nodes_t *current, cellule_t *nei, nodes_t **open);
 int final_push(nodes_t *current, store_t *store, cellule_t **array);
 void addNeighbors(cellule_t **cellule, store_t *store, \
 int index, int temp);
-void set_neighbors(nodes_t **current, cellule_t **array, store_t *store);
+void set_neighbors(nodes_t **current, store_t *store);
 int get_h_cost(int x, int y, int x_f, int y_f);
 void delete_node(nodes_t **nodes, nodes_t *ptr);
 nodes_t *lowest_fcost(nodes_t *open);
@@ -49,6 +51,6 @@ nodes_t *open, nodes_t *close);
 int include(nodes_t *nodes, cellule_t cellule);
 void print_char(char **map, int x, int y);
 void push(nodes_t **nodes, cellule_t cellule);
-cellule_t new(int x, int y, store_t *store, void (*show)(char **, int, int));
+cellule_t new(int x, int y, void (*show)(char **, int, int));
 char **dante_solver(char *filepath);
 #endif /* SOLVER_H */

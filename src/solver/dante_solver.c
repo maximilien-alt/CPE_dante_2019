@@ -47,20 +47,18 @@ void foreach_neighbors(nodes_t *current, nodes_t **open, \
 nodes_t *close, store_t *store)
 {
     cellule_t *nei = current->cellule.neighbors;
-    int tempG = 0;
+    int bool = 0;
 
     for (; nei; nei = nei->neighbors) {
-        if (!include(close, *nei) && store->map[nei->y][nei->x] != 'X') {
-            tempG = current->cellule.g_cost + 1;
-            if (include(*open, *nei)) {
-                nei->g_cost = (tempG < nei->g_cost) ? tempG : nei->g_cost;
-            } else {
-                nei->g_cost = tempG;
+        if (!include(close, *nei)) {
+            bool = check_better(current, nei, open);
+            if (bool == 1) {
+                nei->h_cost = get_h_cost(nei->x, nei->y, store->end.x, store->end.y);
+                nei->f_cost = nei->g_cost + nei->h_cost;
+                nei->previous = &current->cellule;
                 push(open, *nei);
+                printf("new_f_cost : %d [%d][%d]\n", nei->f_cost, nei->y, nei->x);
             }
-            nei->h_cost = get_h_cost(nei->x, nei->y, store->end.x, store->end.y);
-            nei->f_cost = nei->g_cost + nei->h_cost;
-            nei->previous = &current->cellule;
         }
     }
 }
@@ -74,14 +72,15 @@ int loop(store_t *store, cellule_t **array)
     push(&open, store->start);
     while (open) {
         current = lowest_fcost(open);
+        printf("point[%d] [%d]\n", current->cellule.y, current->cellule.x);
+        print_map(store, array, open, close);
         if (current->cellule.x == store->end.x && \
         current->cellule.y == store->end.y)
             return (final_push(current, store, array));
         delete_node(&open, current);
         push(&close, current->cellule);
-        set_neighbors(&current, array, store);
+        set_neighbors(&current, store);
         foreach_neighbors(current, &open, close, store);
-        print_map(store, array, open, close);
     }
     print_map(store, array, open, close);
     printf("no solution!\n");

@@ -4,6 +4,7 @@
         "*.tcc": "c",
         "string": "c",
         "string_view": "c",
-        "solver.h": "c"
+        "solver.h": "c",
+        "fstream": "c"
     }
 }

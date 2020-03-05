@@ -33,15 +33,13 @@ cellule_t **create_array(store_t *store)
 
     for (int index = 0; index < store->cols; index += 1) {
         array[index] = my_malloc(sizeof(cellule_t) * store->rows);
-        for (int temp = 0; temp < store->rows; temp += 1) {
-            array[index][temp] = new(temp, index, store, print_char);
-            //addNeighbors(&array[index][temp].neighbors, store, index, temp);
-        }
+        for (int temp = 0; temp < store->rows; temp += 1)
+            array[index][temp] = new(temp, index, print_char);
     }
     return (array);
 }
 
-cellule_t new(int x, int y, store_t *store, void (*show)(char **, int, int))
+cellule_t new(int x, int y, void (*show)(char **, int, int))
 {
     cellule_t cellule;
 
