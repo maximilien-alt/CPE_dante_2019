@@ -30,7 +30,7 @@ int check_better(nodes_t *current, cellule_t *nei, nodes_t **open)
     if (include(*open, *nei)) {
         if (tempG < nei->g_cost) {
             nei->g_cost = tempG;
-            bool = 1;
+            bool = 2;
         }
     } else {
         nei->g_cost = tempG;

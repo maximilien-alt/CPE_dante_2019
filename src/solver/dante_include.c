@@ -67,18 +67,15 @@ nodes_t *lowest_fcost(nodes_t *open)
     int winner = 0;
 
     for (nodes_t *copy = open; copy; copy = copy->next) {
-        printf("potential [%d] [%d] f :%d\n", copy->cellule.y, copy->cellule.x, copy->cellule.f_cost);
-        if (copy->cellule.f_cost <= save_f) {
+        if (copy->cellule.f_cost < save_f) {
             save_f = copy->cellule.f_cost;
             winner = check;
         }
         check += 1;
     }
     for (nodes_t *copy = open; copy; copy = copy->next) {
-        if (winner == 0) {
-            printf("find [%d] [%d] f : %d\n", copy->cellule.y, copy->cellule.x, copy->cellule.f_cost);
+        if (winner == 0)
             return (copy);
-        }
         winner -= 1;
     }
     return (NULL);
