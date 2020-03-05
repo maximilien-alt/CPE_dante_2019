@@ -6,7 +6,42 @@
 */
 
 #include "../../include/my.h"
+#include "../../include/solver.h"
 #include "../../include/garbage_collector.h"
+
+int final_push(nodes_t *current, store_t *store, cellule_t **array)
+{
+    nodes_t *path = NULL;
+    cellule_t temp = current->cellule;
+
+    push(&path, temp);
+    while (temp.previous) {
+        printf("y : %d x : %d\n", temp.y, temp.x);
+        push(&path, *temp.previous);
+        temp = *temp.previous;
+    }
+    for (int index = 0; index < store->cols; index += 1) {
+        for (int temp = 0; temp < store->rows; temp += 1) {
+            if (include(path, array[index][temp]))
+                printf("\033[0;34m");
+            array[index][temp].show(store->map, temp, index);
+            printf("\033[0m");
+        }
+        printf("\n");
+    }
+    return (0);
+}
+
+void set_neighbors(nodes_t **current, cellule_t **array, store_t *store)
+{
+    addNeighbors(&(*current)->cellule.neighbors, store, \
+    (*current)->cellule.y, (*current)->cellule.x);
+}
+
+void print_char(char **map, int x, int y)
+{
+    printf("%c", map[y][x]);
+}
 
 int check_good_input(int ac, char *av[])
 {
@@ -26,6 +61,11 @@ int check_good_input(int ac, char *av[])
 
 int main(int ac, char *av[])
 {
+    char **map = NULL;
+
     check_good_input(ac, av);
+    map = dante_solver(av[1]);
+    //for (int index = 0; map[index]; index += 1)
+    //    printf("%s\n", map[index]);
     return (0);
 }
