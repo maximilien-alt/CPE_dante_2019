@@ -53,7 +53,8 @@ nodes_t *close, store_t *store)
         if (!include(close, *nei)) {
             bool = check_better(current, nei, open);
             if (bool == 1 || bool == 2) {
-                nei->h_cost = get_h_cost(nei->x, nei->y, store->end.x, store->end.y);
+                nei->h_cost = get_h_cost(nei->x, nei->y, \
+                store->end.x, store->end.y);
                 nei->f_cost = nei->g_cost + nei->h_cost;
                 nei->previous = &current->cellule;
             }
@@ -72,7 +73,6 @@ int loop(store_t *store, cellule_t **array)
     push(&open, store->start);
     while (open) {
         current = lowest_fcost(open);
-        //print_map(store, array, open, close);
         if (current->cellule.x == store->end.x && \
         current->cellule.y == store->end.y)
             return (final_push(current, store, array));
@@ -81,9 +81,7 @@ int loop(store_t *store, cellule_t **array)
         set_neighbors(&current, store);
         foreach_neighbors(current, &open, close, store);
     }
-    print_map(store, array, open, close);
-    printf("no solution!\n");
-    return (84);
+    exit (84);
 }
 
 char **dante_solver(char *filepath)

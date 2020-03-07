@@ -11,27 +11,13 @@
 
 int final_push(nodes_t *current, store_t *store, cellule_t **array)
 {
-    //nodes_t *path = NULL;
     cellule_t temp = current->cellule;
 
-    //push(&path, temp);
     while (temp.previous) {
         store->map[temp.y][temp.x] = 'o';
-        //push(&path, *temp.previous);
         temp = *temp.previous;
     }
     store->map[temp.y][temp.x] = 'o';
-    //for (int index = 0; index < store->cols; index += 1) {
-    //    for (int temp = 0; temp < store->rows; temp += 1) {
-    //        if (include(path, array[index][temp])) {
-    //            printf("\033[0;34m");
-    //            store->map[index][temp] = 'o';
-    //        }
-    //        array[index][temp].show(store->map, temp, index);
-    //        printf("\033[0m");
-    //    }
-    //    printf("\n");
-    //}
     return (0);
 }
 
