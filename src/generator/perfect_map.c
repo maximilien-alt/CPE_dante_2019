@@ -16,6 +16,10 @@ void complete_cell(char **map, int x, int y, cells_t *cells)
 
     prev[0] = x;
     prev[1] = y;
+    if (map[y][x + 1] && !map[y][x + 2] && !map[y + 1] && map[y][x + 1] != '*')
+        return (add_cell(x + 1, y, cells));
+    if (map[y + 1] && !map[y + 2] && !map[y][x + 1] && map[y + 1][x] != '*')
+        return (add_cell(x, y + 1, cells));
     if (check == 0)
         first_order(map, prev, cells);
     if (check == 1)
@@ -65,6 +69,8 @@ char **perfect_map(int x, int y)
     int index = 0;
     cells_t cellules;
 
+    if (x <= 0 || y <= 0)
+        exit (84);
     cellules.x = 0;
     cellules.y = 0;
     cellules.next = NULL;

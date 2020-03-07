@@ -30,11 +30,12 @@ int check_y_case(char **map, int x, int y, int prev[2])
 {
     if (!map[y][x + 1]) {
         if ((map[y][x - 1] == '*' && (prev[0] != x - 1 || prev[1] != y)) \
-        || (map[y + 1][x] == '*' && (prev[0] != x || prev[1] != y + 1)))
+        || (map[y + 1] && map[y + 1][x] == '*' && \
+        (prev[0] != x || prev[1] != y + 1)))
             return (0);
         return (1);
     }
-    if ((map[y + 1][x] == '*' && (prev[0] != x || prev[1] != y + 1)) \
+    if ((map[y + 1] && map[y + 1][x] == '*' && (prev[0] != x || prev[1] != y + 1)) \
     || (map[y][x - 1] == '*' && (prev[0] != x - 1 || prev[1] != y)) \
     || (map[y][x + 1] == '*' && (prev[0] != x + 1 || prev[1] != y)))
         return (0);
