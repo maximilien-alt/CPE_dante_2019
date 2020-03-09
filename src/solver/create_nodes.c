@@ -33,8 +33,10 @@ cellule_t **create_array(store_t *store)
 
     for (int index = 0; index < store->cols; index += 1) {
         array[index] = my_malloc(sizeof(cellule_t) * store->rows);
-        for (int temp = 0; temp < store->rows; temp += 1)
+        for (int temp = 0; temp < store->rows; temp += 1) {
             array[index][temp] = new(temp, index, print_char);
+            setup_neighbors(&array[index][temp].neighbors, store, temp, index);
+        }
     }
     return (array);
 }
@@ -43,6 +45,7 @@ cellule_t new(int x, int y, void (*show)(char **, int, int))
 {
     cellule_t cellule;
 
+    cellule.status = 0;
     cellule.x = x;
     cellule.y = y;
     cellule.f_cost = 0;

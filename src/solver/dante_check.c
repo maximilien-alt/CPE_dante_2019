@@ -9,6 +9,28 @@
 #include "../../include/solver.h"
 #include "../../include/garbage_collector.h"
 
+void change_status(cellule_t **neighbors, int y, int x)
+{
+    for (cellule_t *copy = *neighbors; copy; copy = copy->neighbors) {
+        if (copy->y == y && copy->x == x) {
+            copy->status = 1;
+            return;
+        }
+    }
+}
+
+void setup_neighbors(cellule_t **neighbors, store_t *store, int x, int y)
+{
+    if (y < store->cols - 1 && store->map[y + 1][x] != 'X')
+        spe_push(neighbors, y + 1, x);
+    if (y > 0 && store->map[y - 1][x] != 'X')
+        spe_push(neighbors, y - 1, x);
+    if (x < store->rows - 1 && store->map[y][x + 1] != 'X')
+        spe_push(neighbors, y, x + 1);
+    if (x > 0 && store->map[y][x - 1] != 'X')
+        spe_push(neighbors, y, x - 1);
+}
+
 void add_front(nodes_t **nodes, cellule_t cellule)
 {
     nodes_t *new = my_malloc(sizeof(nodes_t));

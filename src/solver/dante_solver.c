@@ -26,46 +26,40 @@ char **get_map(char *filepath)
     return (map);
 }
 
-void foreach_neighbors(nodes_t *current, nodes_t **open, \
-nodes_t *close, store_t *store)
+void foreach_neighbors(nodes_t *current, nodes_t **open, store_t *store)
 {
     cellule_t *nei = current->cellule.neighbors;
     int bool = 0;
 
     for (; nei; nei = nei->neighbors) {
-        bool = check_better(current, nei, open);
-        if (bool == 1 || bool == 2) {
-            nei->h_cost = get_h_cost(nei->x, nei->y, \
-            store->end.x, store->end.y);
-            nei->f_cost = nei->g_cost + nei->h_cost;
-            nei->previous = &current->cellule;
+        if (nei->status == 0) {
+            bool = check_better(current, nei, open);
+            if (bool == 1 || bool == 2) {
+                nei->h_cost = get_h_cost(nei->x, nei->y, \
+                store->end.x, store->end.y);
+                nei->f_cost = nei->g_cost + nei->h_cost;
+                nei->previous = &current->cellule;
+            }
+            if (bool == 1)
+                push(open, *nei);
         }
-        if (bool == 1)
-            push(open, *nei);
     }
 }
 
 int loop(store_t *store, cellule_t **array)
 {
     nodes_t *open = NULL;
-    nodes_t *close = NULL;
     nodes_t *current = NULL;
-    fast_t fast;
 
-    fast.top = 0;
-    fast.bottom = 0;
-    fast.right = 0;
-    fast.left = 0;
     push(&open, store->start);
     while (open) {
         current = lowest_fcost(open);
         if (current->cellule.x == store->end.x && \
         current->cellule.y == store->end.y)
-            return (final_push(current, store, array));
+            return (final_push(current, store));
         delete_node(&open, current);
-        push(&close, current->cellule);
-        set_neighbors(&current, store, close, &fast);
-        foreach_neighbors(current, &open, close, store);
+        set_neighbors(&current, array, store);
+        foreach_neighbors(current, &open, store);
     }
     exit (84);
 }

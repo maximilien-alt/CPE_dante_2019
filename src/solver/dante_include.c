@@ -14,6 +14,7 @@ void spe_push(cellule_t **neighbor, int y, int x)
     cellule_t *new = my_malloc(sizeof(cellule_t));
     cellule_t *temp = *neighbor;
 
+    new->status = 0;
     new->x = x;
     new->y = y;
     new->f_cost = 0;
@@ -30,20 +31,6 @@ void spe_push(cellule_t **neighbor, int y, int x)
         temp = temp->neighbors;
     temp->neighbors = new;
     new->previous = temp;
-}
-
-void check_for_close(nodes_t *close, fast_t *fast, int y, int x)
-{
-    for (nodes_t *copy = close; copy; copy = copy->next) {
-        if (copy->cellule.x == x && copy->cellule.y == y + 1)
-            fast->top = 1;
-        if (copy->cellule.x == x && copy->cellule.y == y - 1)
-            fast->bottom = 1;
-        if (copy->cellule.x == x + 1 && copy->cellule.y == y)
-            fast->right = 1;
-        if (copy->cellule.x == x - 1 && copy->cellule.y == y)
-            fast->left = 1;
-    }
 }
 
 void delete_node(nodes_t **nodes, nodes_t *ptr)
