@@ -5,7 +5,7 @@
 ## makefile
 ##
 
-all	:	
+all	:
 		make -C solver
 		make -C generator
 

@@ -26,6 +26,7 @@ int main(int ac, char *av[])
     int x = 0;
     int y = 0;
     char **map = NULL;
+    int index = 0;
 
     srand(time(NULL));
     check_input_error(ac, av);
@@ -35,7 +36,8 @@ int main(int ac, char *av[])
         map = perfect_map(x, y);
     else
         map = imperfect_map(x, y);
-    for (int index = 0; map && map[index]; index += 1)
+    for (; map && map[index + 1]; index += 1)
         printf("%s\n", map[index]);
+    printf("%s", map[index]);
     return (0);
 }

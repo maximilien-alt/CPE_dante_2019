@@ -26,23 +26,6 @@ char **get_map(char *filepath)
     return (map);
 }
 
-void print_map(store_t *store, cellule_t **array, \
-nodes_t *open, nodes_t *close)
-{
-    for (int index = 0; index < store->cols; index += 1) {
-        for (int temp = 0; temp < store->rows; temp += 1) {
-            if (include(close, array[index][temp]))
-                printf("\033[0;31m");
-            if (include(open, array[index][temp]))
-                printf("\033[0;32m");
-            array[index][temp].show(store->map, temp, index);
-            printf("\033[0m");
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
 void foreach_neighbors(nodes_t *current, nodes_t **open, \
 nodes_t *close, store_t *store)
 {

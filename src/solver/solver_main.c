@@ -51,11 +51,13 @@ int check_good_input(int ac, char *av[])
 int main(int ac, char *av[])
 {
     char **map = NULL;
+    int index = 0;
 
     check_good_input(ac, av);
     map = dante_solver(av[1]);
     (void)map;
-    for (int index = 0; map[index]; index += 1)
+    for (; map[index + 1]; index += 1)
         printf("%s\n", map[index]);
+    printf("%s", map[index]);
     return (0);
 }
