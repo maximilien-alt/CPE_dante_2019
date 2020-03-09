@@ -55,7 +55,14 @@ int main(int ac, char *av[])
     check_good_input(ac, av);
     map = dante_solver(av[1]);
     (void)map;
-    for (int index = 0; map[index]; index += 1)
-        printf("%s\n", map[index]);
+    for (int index = 0; map[index]; index += 1) {
+        for (int temp = 0; map[index][temp]; temp += 1) {
+            if (map[index][temp] == 'o')
+                printf("\033[0;34m");
+            printf("%c", map[index][temp]);
+            printf("\033[0m");
+        }
+        printf("\n");
+    }
     return (0);
 }
