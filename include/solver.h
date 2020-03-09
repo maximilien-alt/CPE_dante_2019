@@ -8,6 +8,14 @@
 #ifndef SOLVER_H_
 #define SOLVER_H_
 
+typedef struct fast_s
+{
+    int top;
+    int bottom;
+    int right;
+    int left;
+}fast_t;
+
 typedef struct cellule_s
 {
     int x;
@@ -36,12 +44,15 @@ typedef struct nodes_s
     struct nodes_s *previous;
 }nodes_t;
 
+int spe_include(nodes_t *close, int y, int x);
+void spe_push(cellule_t **neighbor, int y, int x);
+void add_front(nodes_t **nodes, cellule_t cellule);
 void delete_neighbor(cellule_t **neighbor, cellule_t *ptr);
 int check_better(nodes_t *current, cellule_t *nei, nodes_t **open);
 int final_push(nodes_t *current, store_t *store, cellule_t **array);
-void addNeighbors(cellule_t **cellule, store_t *store, \
-int index, int temp);
-void set_neighbors(nodes_t **current, store_t *store);
+void check_for_close(nodes_t *close, fast_t *fast, int y, int x);
+void set_neighbors(nodes_t **current, store_t *store, \
+nodes_t *close, fast_t *fast);
 int get_h_cost(int x, int y, int x_f, int y_f);
 void delete_node(nodes_t **nodes, nodes_t *ptr);
 nodes_t *lowest_fcost(nodes_t *open);

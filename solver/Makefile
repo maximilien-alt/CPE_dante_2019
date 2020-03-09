@@ -70,7 +70,7 @@ COMP	=	../src/solver/solver_main.c	\
 			../src/solver/dante_check.c	\
 			../src/garbage/garbage_collector.c
 
-CFLAGS  =	-W -Wall -Wextra -Iinclude -O3
+CFLAGS  =	-W -Wall -Wextra -Iinclude -O3 -Ofast -g3
 
 OBJ	=	$(SRC:.c=.o)
 

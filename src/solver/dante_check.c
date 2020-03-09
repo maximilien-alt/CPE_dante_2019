@@ -9,6 +9,17 @@
 #include "../../include/solver.h"
 #include "../../include/garbage_collector.h"
 
+void add_front(nodes_t **nodes, cellule_t cellule)
+{
+    nodes_t *new = my_malloc(sizeof(nodes_t));
+
+    new->cellule = cellule;
+    new->next = *nodes;
+    new->previous = NULL;
+    (*nodes)->previous = new;
+    *nodes = (*nodes)->previous;
+}
+
 void delete_neighbor(cellule_t **neighbor, cellule_t *ptr)
 {
     if (!*neighbor || !ptr)

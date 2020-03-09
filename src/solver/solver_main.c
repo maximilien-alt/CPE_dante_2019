@@ -21,10 +21,25 @@ int final_push(nodes_t *current, store_t *store, cellule_t **array)
     return (0);
 }
 
-void set_neighbors(nodes_t **current, store_t *store)
+void set_neighbors(nodes_t **current, store_t *store, \
+nodes_t *close, fast_t *fast)
 {
-    addNeighbors(&(*current)->cellule.neighbors, store, \
-    (*current)->cellule.y, (*current)->cellule.x);
+    int x = (*current)->cellule.x;
+    int y = (*current)->cellule.y;
+
+    fast->bottom = 0;
+    fast->left = 0;
+    fast->right = 0;
+    fast->top = 0;
+    check_for_close(close, fast, y, x);
+    if (y < store->cols - 1 && store->map[y + 1][x] != 'X' && fast->top != 1)
+        spe_push(&(*current)->cellule.neighbors, y + 1, x);
+    if (y > 0 && store->map[y - 1][x] != 'X' && fast->bottom != 1)
+        spe_push(&(*current)->cellule.neighbors, y - 1, x);
+    if (x < store->rows - 1 && store->map[y][x + 1] != 'X' && fast->right != 1)
+        spe_push(&(*current)->cellule.neighbors, y, x + 1);
+    if (x > 0 && store->map[y][x - 1] != 'X' && fast->left != 1)
+        spe_push(&(*current)->cellule.neighbors, y, x - 1);
 }
 
 void print_char(char **map, int x, int y)

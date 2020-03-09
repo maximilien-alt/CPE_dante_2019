@@ -32,20 +32,18 @@ void spe_push(cellule_t **neighbor, int y, int x)
     new->previous = temp;
 }
 
-void addNeighbors(cellule_t **cellule, store_t *store, \
-int index, int temp)
+void check_for_close(nodes_t *close, fast_t *fast, int y, int x)
 {
-    int x = temp;
-    int y = index;
-
-    if (y < store->cols - 1 && store->map[y + 1][x] != 'X')
-        spe_push(cellule, y + 1, x);
-    if (y > 0 && store->map[y - 1][x] != 'X')
-        spe_push(cellule, y - 1, x);
-    if (x < store->rows - 1 && store->map[y][x + 1] != 'X')
-        spe_push(cellule, y, x + 1);
-    if (x > 0 && store->map[y][x - 1] != 'X')
-        spe_push(cellule, y, x - 1);
+    for (nodes_t *copy = close; copy; copy = copy->next) {
+        if (copy->cellule.x == x && copy->cellule.y == y + 1)
+            fast->top = 1;
+        if (copy->cellule.x == x && copy->cellule.y == y - 1)
+            fast->bottom = 1;
+        if (copy->cellule.x == x + 1 && copy->cellule.y == y)
+            fast->right = 1;
+        if (copy->cellule.x == x - 1 && copy->cellule.y == y)
+            fast->left = 1;
+    }
 }
 
 void delete_node(nodes_t **nodes, nodes_t *ptr)
