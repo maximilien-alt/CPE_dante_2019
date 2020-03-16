@@ -27,13 +27,13 @@ void set_neighbors(nodes_t **current, cellule_t **array, store_t *store)
     int y = (*current)->cellule.y;
 
     (*current)->cellule.neighbors = array[y][x].neighbors;
-    if (y < store->cols - 1 && store->map[y + 1][x] != 'X')
+    if (y < store->cols - 1)
         change_status(&array[y + 1][x].neighbors, y, x);
-    if (y > 0 && store->map[y - 1][x] != 'X')
+    if (y > 0)
         change_status(&array[y - 1][x].neighbors, y, x);
-    if (x < store->rows - 1 && store->map[y][x + 1] != 'X')
+    if (x < store->rows - 1)
         change_status(&array[y][x + 1].neighbors, y, x);
-    if (x > 0 && store->map[y][x - 1] != 'X')
+    if (x > 0)
         change_status(&array[y][x - 1].neighbors, y, x);
 }
 

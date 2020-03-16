@@ -14,16 +14,16 @@ int get_h_cost(int x, int y, int x_f, int y_f)
     int x_n = 0;
     int y_n = 0;
 
-    y_n = (y_f - y > 0) ? y_f - y : -(y_f - y);
-    x_n = (x_f - x > 0) ? x_f - x : -(x_f - x);
+    y_n = (y_f - y > 0) ? y_f - y : - (y_f - y);
+    x_n = (x_f - x > 0) ? x_f - x : - (x_f - x);
     return (x_n + y_n);
 }
 
 int get_g_cost(int x, int y)
 {
     int goal[2];
-    goal[0] = (0 - x >= 0) ? 0 - x : -(0 - x);
-    goal[1] = (0 - y >= 0) ? 0 - y : -(0 - y);
+    goal[0] = (0 - x >= 0) ? 0 - x : - (0 - x);
+    goal[1] = (0 - y >= 0) ? 0 - y : - (0 - y);
     return (goal[0] + goal[1]);
 }
 
@@ -34,8 +34,11 @@ cellule_t **create_array(store_t *store)
     for (int index = 0; index < store->cols; index += 1) {
         array[index] = my_malloc(sizeof(cellule_t) * store->rows);
         for (int temp = 0; temp < store->rows; temp += 1) {
-            array[index][temp] = new(temp, index, print_char);
-            setup_neighbors(&array[index][temp].neighbors, store, temp, index);
+            if (store->map[index][temp] != 'X') {
+                array[index][temp] = new(temp, index, print_char);
+                setup_neighbors(&array[index][temp].neighbors, \
+                store, temp, index);
+            }
         }
     }
     return (array);

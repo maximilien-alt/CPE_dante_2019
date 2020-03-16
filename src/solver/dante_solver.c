@@ -32,7 +32,7 @@ void foreach_neighbors(nodes_t *current, nodes_t **open, store_t *store)
     int bool = 0;
 
     for (; nei; nei = nei->neighbors) {
-        if (nei->status == 0) {
+        if (!nei->status) {
             bool = check_better(current, nei, open);
             if (bool == 1 || bool == 2) {
                 nei->h_cost = get_h_cost(nei->x, nei->y, \
@@ -61,7 +61,8 @@ int loop(store_t *store, cellule_t **array)
         set_neighbors(&current, array, store);
         foreach_neighbors(current, &open, store);
     }
-    exit (84);
+    printf("no solution found");
+    exit (0);
 }
 
 char **dante_solver(char *filepath)
@@ -79,6 +80,10 @@ char **dante_solver(char *filepath)
     array = create_array(&store);
     store.start = array[0][0];
     store.end = array[store.cols - 1][store.rows - 1];
+    if (map[store.cols - 1][store.rows - 1] == 'X') {
+        printf("no solution found");
+        exit (0);
+    }
     loop(&store, array);
     return (store.map);
 }
